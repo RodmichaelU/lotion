@@ -1,5 +1,14 @@
+import Sidebar from "./sidebar";
+import Main from "./Main";
+
 function App() {
-  return <h1>Lotion</h1>;
+  return (
+  <div className="App">
+      <Sidebar />
+      <Main />
+    </div>
+  );
+
 }
 
 export default App;
