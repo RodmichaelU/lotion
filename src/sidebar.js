@@ -26,6 +26,8 @@ const Sidebar = ({
                   <strong>{title}</strong>
                   
                 </div>
+
+                
                 <p>{body && body.substr(0, 100) + "..."}</p>
                 <small className="note-meta">
                   Last Modified{" "}

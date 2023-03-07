@@ -1,19 +1,17 @@
-import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'
+
 
 const Main = ({ activeNote, onUpdateNote, onDeleteNote }) => {
-  const [saved, setSaved] = useState(false); // track if note has been saved
-
   const onEditField = (field, value) => {
     onUpdateNote({
       ...activeNote,
       [field]: value,
       lastModified: Date.now(),
     });
-    setSaved(false); // note is no longer saved after editing
   };
+
 
   const options = {
     year: "numeric",
@@ -31,26 +29,28 @@ const formatDate = (when) => {
     return formatted;
 };
 
+  const onDeleteClick = () => {
+
+    const confirmDelete = window.confirm("Are you sure you want to delete this note?");
+    
+    if (confirmDelete) {
+    
+    onDeleteNote && onDeleteNote(activeNote.id);
+    }
+    };
+
+
+  if (!activeNote) return <div className="no-active-note">No Active Note</div>;
 
 
   const onSaveClick = () => {
-    const savedNote = JSON.stringify(activeNote);
-    localStorage.setItem(activeNote.id, savedNote);
-    setSaved(true);
+    const updatedNote = {
+      ...activeNote,
+      lastModified: Date.now(),
+    };
+    onUpdateNote(updatedNote);
   };
-
-  const onDeleteClick = () => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this note?");
-    if (confirmDelete) {
-      onDeleteNote && onDeleteNote(activeNote.id);
-    }
-  };
-
-  if (!activeNote)
-    return (
-      <div className="no-active-note">Select a note, or create a new one.</div>
-    );
-
+ 
   return (
     <div className="app-main">
       <div className="app-main-note-edit">
@@ -63,23 +63,28 @@ const formatDate = (when) => {
           autoFocus
         />
         <ReactQuill
+          id="body"
+          placeholder="Your Note Here"
           value={activeNote.body}
-          //onChange={(value) => onEditField("body", value)}
+          onChange={(content, delta, source) => {
+            if (source === "user") {
+              onEditField("body", content);
+            }
+          }}
         />
+       
       </div>
-      <div className="app-main-note-preview">
-        <button onClick={onDeleteClick} className="delete-button">
-          Delete
-        </button>
-        <button onClick={onSaveClick} className="save-button">
-          {saved ? "Edit" : "Save"}
-        </button>
-        <ReactMarkdown className="markdown-preview">
-          {activeNote.body}
-        </ReactMarkdown>
+      <div className="app-main-note-delete-button">
+        <button onClick={onDeleteClick}>Delete</button>
+       
       </div>
+
+
+      <div className="app-main-note-save-button">
+        <button onClick={onSaveClick}>Save</button>
+      </div>
+     
     </div>
   );
-};
-
-export default Main;
+        };
+  export default Main;  

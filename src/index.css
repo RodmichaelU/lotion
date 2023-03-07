@@ -178,6 +178,7 @@ textarea {
   position: absolute;
   top: -330px;
   right: -470px;
+
   font-size: 1em;
   color: red;
 }
@@ -200,3 +201,36 @@ textarea {
   font-size: 1rem;
   line-height: 2rem;
 }
+
+
+#body {
+  display: block;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+  margin-left: -21px;
+  width: 130%;
+  height: 900px;
+  padding: 10px;
+  resize: none;
+  font-size: inherit;
+  font-family: inherit;
+  outline: #08c;
+  border: #04c;
+}
+
+
+.app-main-note-delete-button{
+  margin-top: -330px;
+  margin-left: 940px;
+  font-size: 20px;
+  color: red;
+}
+
+.app-main-note-save-button{
+  margin-top: -23px;
+  margin-left: 890px;
+  font-size: 20px;
+  color: green;
+
+}
+
