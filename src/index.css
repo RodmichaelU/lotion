@@ -221,16 +221,21 @@ textarea {
 
 .app-main-note-delete-button{
   margin-top: -330px;
-  margin-left: 940px;
+  margin-left: 850px;
   font-size: 20px;
   color: red;
 }
 
 .app-main-note-save-button{
   margin-top: -23px;
-  margin-left: 890px;
+  margin-left: 780px;
   font-size: 20px;
   color: green;
 
 }
 
+.app-main-note-date-picker {
+  position: absolute;
+  top: 210px;
+  left: 280px;
+}

@@ -3,7 +3,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'
 
 
-const Main = ({ activeNote, onUpdateNote, onDeleteNote }) => {
+const Main = ({ activeNote, onUpdateNote, onDeleteNote, onCalendarChange }) => {
   const onEditField = (field, value) => {
     onUpdateNote({
       ...activeNote,
@@ -12,36 +12,36 @@ const Main = ({ activeNote, onUpdateNote, onDeleteNote }) => {
     });
   };
 
-
   const options = {
     year: "numeric",
     month: "long",
     day: "numeric",
     hour: "numeric",
     minute: "numeric",
-};
+  };
 
-const formatDate = (when) => {
+  const formatDate = (when) => {
     const formatted = new Date(when).toLocaleString("en-US", options);
     if (formatted === "Invalid Date") {
-        return "";
+      return "";
     }
     return formatted;
-};
+  };
 
   const onDeleteClick = () => {
-
     const confirmDelete = window.confirm("Are you sure you want to delete this note?");
-    
     if (confirmDelete) {
-    
-    onDeleteNote && onDeleteNote(activeNote.id);
+      onDeleteNote && onDeleteNote(activeNote.id);
     }
+  };
+
+  const onCalendarDateChange = (date) => {
+    const updatedNote = {
+      ...activeNote,
+      lastModified: date.getTime(),
     };
-
-
-  if (!activeNote) return <div className="no-active-note">No Active Note</div>;
-
+    onUpdateNote(updatedNote);
+  };
 
   const onSaveClick = () => {
     const updatedNote = {
@@ -50,7 +50,9 @@ const formatDate = (when) => {
     };
     onUpdateNote(updatedNote);
   };
- 
+
+  if (!activeNote) return <div className="no-active-note">No Active Note</div>;
+
   return (
     <div className="app-main">
       <div className="app-main-note-edit">
@@ -72,19 +74,27 @@ const formatDate = (when) => {
             }
           }}
         />
-       
-      </div>
-      <div className="app-main-note-delete-button">
-        <button onClick={onDeleteClick}>Delete</button>
-       
       </div>
 
+      <div className="app-main-note-date-picker">
+        <label htmlFor="date-picker">Last Modified:</label>
+        <input
+          type="date"
+          id="date-picker"
+          value={formatDate(activeNote.lastModified)}
+          onChange={(e) => onCalendarDateChange(new Date(e.target.value))}
+        />
+      </div>
+
+      <div className="app-main-note-delete-button">
+        <button onClick={onDeleteClick}>Delete</button>
+      </div>
 
       <div className="app-main-note-save-button">
         <button onClick={onSaveClick}>Save</button>
       </div>
-     
     </div>
   );
-        };
-  export default Main;  
+};
+
+export default Main;
