@@ -55,6 +55,18 @@ function App() {
 
   return (
     
+  /*Tried to implement routing. Couldn't get it to work
+  <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Edit />}></Route>
+          <Route path="/save" element={<Save />}></Route>
+           <Route path="/notes" element={<Notes />}></Route>
+          <Route path="/noNotes" element={<noNotes />}></Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>*/
+
     <div className="App">
       <header className="header">
         <h1>Lotion</h1>
