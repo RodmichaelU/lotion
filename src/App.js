@@ -31,6 +31,8 @@ function App() {
     setNotes(notes.filter(({ id }) => id !== noteId));
   };
 
+  window.history.replaceState( {} , 'notes', '/notes' );
+
   const onUpdateNote = (updatedNote) => {
     const updatedNotesArr = notes.map((note) => {
       if (note.id === updatedNote.id) {
@@ -52,6 +54,7 @@ function App() {
   };
 
   return (
+    
     <div className="App">
       <header className="header">
         <h1>Lotion</h1>
